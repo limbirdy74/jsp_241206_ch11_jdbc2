@@ -7,9 +7,9 @@
 <title>회원가입</title>
 </head>
 <body>
-	<h2>회원가입</h2>
+	<h2>회원가입2</h2>
 	<hr>
-	<form action="joinOk.jsp" method="post">
+	<form action="joinOk2.jsp" method="post">
 		아이디 : <input type="text" name="mid"><br><br>
 		비밀번호 : <input type="password" name="mpw"><br><br>
 		이름 : <input type="text" name="mname"><br><br>
