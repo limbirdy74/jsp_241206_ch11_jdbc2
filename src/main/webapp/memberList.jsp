@@ -1,5 +1,5 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.jbedu.member.dto.MemberDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -38,40 +38,38 @@
 			
 			rs = pstmt.executeQuery(); 
 			
-			int hakbun = 0;
-			String name = "";
-			String addr = "";
-			int grade = 0;
-			
 			List<MemberDto> memberDtos = new ArrayList<MemberDto>();
-					
 			
 			out.println("---- 회원 정보 조회 결과 ----"+"<br><br>");
 			while(rs.next()) {
-				mid = rs.getInt("memberid"); //학년
-				mpw = rs.getString("memberpw");  //이름
-				mname = rs.getInt("membername"); //학년
-				memail = rs.getString("memberemail"); //주소
-				mage = rs.getString("memberage");
+				String mid = rs.getString("memberid");
+				String mpw = rs.getString("memberpw"); 
+				String mname = rs.getString("membername");
+				String memail = rs.getString("memberemail"); 
+				int mage = rs.getInt("memberage");
 				
-				// 생성자 2가지 이용 방법
-				//studentDto studentDto = new studentDto(hakbun, name, grade, addr);  
-				studentDto studentDto = new studentDto();
-				studentDto.setHakbun(hakbun);
-				studentDto.setName(name);
-				studentDto.setGrade(grade);
-				studentDto.setAddress(addr);
-				
-				studentList.add(studentDto);
+				MemberDto memberDto = new MemberDto(mid, mpw, mname, memail, mage);  // 필드 생서어자 호출로 초기화
+				memberDtos.add(memberDto);
 				
 				//out.println(hakbun+"/"+name+"/"+grade+"/"+addr+"<br>");
 			}
 
-			for (int i=0;i<studentList.size();i++) {  // size() 가 length
-				out.println(studentList.get(i).getHakbun()+"/");
-				out.println(studentList.get(i).getName()+"/");
-				out.println(studentList.get(i).getGrade()+"/");
-				out.println(studentList.get(i).getAddress()+"<br>");
+			for (MemberDto member : memberDtos) {  //향상된 for 문
+				out.println(member.getMemberid()+"/");
+				out.println(member.getMemberpw()+"/");
+				out.println(member.getMembername()+"/");
+				out.println(member.getMemberemail()+"/");
+				out.println(member.getMemberage()+"<br>");
+			}
+			
+			out.println("=======================================<br>");
+			
+			for (int i=0;i<memberDtos.size();i++) {  // size() 가 length
+				out.println(memberDtos.get(i).getMemberid()+"/");
+				out.println(memberDtos.get(i).getMemberpw()+"/");
+				out.println(memberDtos.get(i).getMembername()+"/");
+				out.println(memberDtos.get(i).getMemberemail()+"/");
+				out.println(memberDtos.get(i).getMemberage()+"<br>");
 			}
 			
 		} catch (Exception e) {
@@ -82,8 +80,8 @@
 				if (rs != null) {
 					rs.close();
 				}
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 				if (conn != null) {
 					conn.close();
